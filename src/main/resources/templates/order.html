@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <title>Main</title>
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+
+<div th:if="${error}">
+    <p th:text="${error}" style="color:red;"></p>
+</div>
+
+
+<div th:if="${success}">
+    <p th:text="${success}" style="color:green;"></p>
+</div>
+
+
+<div class="mt-3">
+    <table class="table table-bordered">
+        <tr>
+            <th>ID</th>
+            <th>Сумма</th>
+            <th>Дата</th>
+            <th>Имя клиента</th>
+            <th>Комментарий</th>
+            <th>Статус</th>
+            <th>Удаление</th>
+        </tr>
+        <tr th:each = "order,stat : ${orders}">
+            <td th:text="${order.id}"> </td>
+            <td th:text="${order.summ}"> </td>
+            <td th:text="${order.date}"> </td>
+            <td th:text="${order.getClientByClientId().name}"> </td>
+            <td th:text="${order.comment}"> </td>
+            <td th:text="${order.status}"> </td>
+            <td>
+                <form th:action="@{/deleteorder}" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.id}" />
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </form>
+            </td>
+
+
+        </tr>
+    </table>
+</div>
+
+<div class="common_box_body test">
+
+    <h3> Добавление заказа</h3>
+
+    <form name="Машина" class="needs-validation" modelAttribute="order" novalidate action="#" id="ncar" th:action="@{/order}" th:object="${order}" method="post">
+        <input type="text" id="rn" name="summ" class="form-control mb-2" placeholder="Сумма">
+        <div class="invalid-feedback mt-0 mb-2">
+            Введите сумму
+        </div>
+
+        <input type="text" name="comment"  class="form-control mb-2" placeholder="Комментарий" required>
+        <div class="invalid-feedback mt-0 mb-2">
+            Введите комментарий
+        </div>
+        <input type="text" name="status"  class="form-control mb-2" placeholder="Статус" required>
+        <div class="invalid-feedback mt-0 mb-2">
+            Введите статус
+        </div>
+
+        <div class="form-group blu-margin">
+            <select class="form-control" name="clientByClientId"  id="dropOperator">
+                <option value="0">Выберите клиента</option>
+                <option   th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
+            </select>
+        </div>
+
+        <input type="submit" class="btn btn-success" value="Создать"> <br><br>
+    </form>
+
+    <h3> Изменить статус заказа</h3>
+
+    <form name="Машина" class="needs-validation" modelAttribute="order" novalidate action="#" id="nca" th:action="@{/statusorder}" th:object="${order}" method="post">
+
+        <div class="form-group mb-2">
+            <select class="form-control" th:field="*{id}"  id="order" name-="order">
+                <option value="0">Выберите заказ</option>
+                <option   th:each="order : ${orders}"  th:value="${order.id}" th:text="${order.id}"></option>
+            </select>
+        </div>
+
+        <input type="text" name="Status" th:name="status1" class="form-control mb-2" placeholder="Статус" required>
+        <div class="invalid-feedback mt-0 mb-2">
+            Введите статус
+        </div>
+
+        <input type="submit" class="btn btn-success" value="Изменить"> <br><br>
+    </form>
+
+    <h3> Изменить комментарий заказа</h3>
+    <form name="Машина" class="needs-validation" modelAttribute="order" novalidate action="#" id="nc" th:action="@{/commentorder}" th:object="${order}" th:method="post">
+        <div class="form-group mb-2">
+            <select class="form-control" th:field="*{id}"  id="order1" name-="order">
+                <option value="0">Выберите заказ</option>
+                <option   th:each="order : ${orders}" th:value="${order.id}" th:text="${order.id}"></option>
+            </select>
+        </div>
+
+        <input type="text" name="Comment"  th:name="comment1" class="form-control mb-2" placeholder="Комментарий" required>
+        <div class="invalid-feedback mt-0 mb-2">
+            Введите комментарий
+        </div>
+
+        <input type="submit" class="btn btn-success" value="Изменить"> <br>
+    </form>
+
+</div>
+<br>
+<br>
+<a href="/">
+    <input type="button" class="btn btn-success" value="Назад">
+</a>
+<br>
+<br>
+
+</body>
+</html>

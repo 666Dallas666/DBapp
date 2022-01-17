@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <title>Main</title>
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Завод</th>
+        <th>Категория</th>
+        <th>Калибр</th>
+        <th>Дальность</th>
+        <th>Дульная скорость</th>
+    </tr>
+    <tr th:each = "query,stat : ${query1}">
+        <td th:text="${query.id}"> </td>
+        <td th:text="${query.name}"> </td>
+        <td th:text="${query.price}"> </td>
+        <td th:text="${query.getFactoryByFactoryId().name}"> </td>
+        <td th:text="${query.category}"> </td>
+        <td th:text="${query.caliber}"> </td>
+        <td th:text="${query.range}"> </td>
+        <td th:text="${query.speed}"> </td>
+    </tr>
+</table>
+<br>
+<br>
+<a href="/">
+    <input type="button" class="btn btn-success" value="Назад">
+</a>
+<br>
+<br>
+</body>
+</html>
